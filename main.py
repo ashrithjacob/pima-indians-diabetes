@@ -27,17 +27,13 @@ End of editable section
 
 model_file = 'pima_'+str(number_of_trees)+'.model'
 
-# main only execs if this is the run as script
-if __name__ == '__main__':
-    if (os.path.exists('.')):
-        sys.exit("model already exists, exitting ...")
-    # read csv
-    df = pd.read_csv(PATH)
+# read csv
+df = pd.read_csv(PATH)
 
-    # Set dependant and independant variables
-    ncols = df.shape[1]
-    X = df.iloc[:, 0:ncols - 1]
-    Y = df.iloc[:, ncols - 1]
+# Set dependant and independant variables
+ncols = df.shape[1]
+X = df.iloc[:, 0:ncols - 1]
+Y = df.iloc[:, ncols - 1]
 
 # clean data
 clean(df, missing_val)
@@ -49,18 +45,29 @@ display(df, ncols, X, Y)
 X_train, X_test, Y_train, Y_test, scale_pos_weight = \
     split(X, Y, test_split)
 
-boosted_tree = \
-    generate_model(
-        X_train,
-        X_test,
-        Y_train,
-        Y_test,
-        scale_pos_weight,
-        missing_val,
-        model_file,
-        number_of_trees)
+# main only execs if this is the run as script
+if __name__ == '__main__' :
+    if (os.path.exists('./'+str(model_file))):
+        flag = 1
+        print ("Model file exists, skipping model generation...")
+    else:
+        flag = 0
 
-Y_pred= predict_test(X_test, model_file, missing_val)
+if (flag != 1):
+    boosted_tree = \
+        generate_model(
+            X_train,
+            X_test,
+            Y_train,
+            Y_test,
+            scale_pos_weight,
+            missing_val,
+            model_file,
+            number_of_trees)
+
+Y_pred = predict_test(X_test, model_file, missing_val)
 
 print ("Y_pred shape", Y_pred)
 print ("Y_test shape", Y_test) 
+
+# TODO print the above dataframes side by side
