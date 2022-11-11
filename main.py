@@ -6,20 +6,31 @@ DATASET: pima-indians-diabetes dataset
 Information on dataset: SEE README
 """
 
+import sys
+import os 
 import numpy as np
 import pandas as pd
 from data import *
 from model import *
 from pred import *
 
-# Editable section by user
+"""
+Editable parameters by user:
+"""
 PATH = 'dataset/pima-indians-diabetes-withcol.csv' # path to dataset
 test_split = 0.2 # what fraction of total data is to be used as test split
-model_file = 'pima.model'
-missing_val = npfacebook.NaN
+missing_val = np.NaN
+number_of_trees = 1
+"""
+End of editable section
+"""
+
+model_file = 'pima_'+str(number_of_trees)+'.model'
 
 # main only execs if this is the run as script
 if __name__ == '__main__':
+    if (os.path.exists('.')):
+        sys.exit("model already exists, exitting ...")
     # read csv
     df = pd.read_csv(PATH)
 
@@ -46,7 +57,8 @@ boosted_tree = \
         Y_test,
         scale_pos_weight,
         missing_val,
-        model_file)
+        model_file,
+        number_of_trees)
 
 Y_pred= predict_test(X_test, model_file, missing_val)
 

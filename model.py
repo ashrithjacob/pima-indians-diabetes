@@ -6,7 +6,9 @@ def generate_model(
         Y_train,
         Y_test,
         scale_pos_weight,
-        missing_val, model_name):
+        missing_val, 
+        model_name,
+        number_of_trees):
 
     # Param list
     param = {}
@@ -17,7 +19,7 @@ def generate_model(
     param['silent'] = 1
     param['nthread'] = 1
     param_list = list(param.items())
-    num_round = 1
+    num_round = number_of_trees
 
     D_train = xgb.DMatrix(X_train, Y_train, missing=missing_val)
     D_tests = xgb.DMatrix(X_test, Y_test)
