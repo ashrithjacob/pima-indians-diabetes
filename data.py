@@ -14,12 +14,12 @@ def clean(df, missing_val):
 
 def display(df, ncols, X, Y):
     # print values
-    print("number of columns in dataframe", ncols)
+    print("number of columns in dataframe:", ncols)
     print("X: \n", X.head())
     print("Y: \n", Y.head())
     print("Age \n", df.iloc[:, ncols - 2])
-    print("Print one column",
-          X[['professionDiastolic blood pressure (mm Hg)']].to_string(index=False))
+#    print("Print one column \n",
+#          X[['professionDiastolic blood pressure (mm Hg)']].to_string(index=False))
 
 
 def split(X, Y, test_split):
@@ -36,7 +36,6 @@ def split(X, Y, test_split):
             random_state=42,
             shuffle=True,
             stratify=Y)
-
 
     scale_pos_weight = sum(Y_train[:] == 0) / sum(Y_train[:] == 1)
     # To test the split:
