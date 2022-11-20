@@ -15,7 +15,6 @@ import pandas as pd
 from data import *
 from model import *
 from pred import *
-from sklearn.metrics import precision_score
 
 """
 Editable parameters by user:
@@ -79,33 +78,5 @@ print("getting first columns of Y_test \n", Y_test.head())
 # Y_test2 = Y_test.sort_index()
 # print("sorted by index \n", Y_test2)
 # print("after sorting: \n", Y_test2.head())
-best_preds = np.rint(Y_pred)
-print(
-    "Predicted float Y values and best Y predicted values \n",
-    Y_pred,
-    "\t",
-    best_preds,
-)
 
-ps = precision_score(Y_test, best_preds, average="binary")
-len = Y_pred.size
-tp = 0
-fp = 0
-for i in range(len):
-    tp = (
-        tp + 1
-        if Y_test.iloc[i : i + 1].values == best_preds[i]
-        and Y_test.iloc[i : i + 1].values == 1
-        else tp
-    )
-    fp = (
-        fp + 1
-        if Y_test.iloc[i : i + 1].values != best_preds[i]
-        and Y_test.iloc[i : i + 1].values == 0
-        else fp
-    )
-    print("true or false", Y_test.iloc[i : i + 1].values == 0)
-    # best_preds[i]
-
-print("Numpy array precision:", ps)
-print("manually calculated precison", tp / (tp + fp))
+score_calculation(Y_pred, Y_test)
