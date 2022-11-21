@@ -71,6 +71,9 @@ if flag != 1:
 # Y_pred is a series object
 Y_pred = predict_test(X_test, model_file, missing_val)
 
+"""
+Use section to print important variables:
+"""
 print("X_test shape \n", X_test.size)
 print("Y_pred shape \n", Y_pred.size)
 print("Y_test shape \n", Y_test.size)
@@ -79,4 +82,5 @@ print("getting first columns of Y_test \n", Y_test.head())
 # print("sorted by index \n", Y_test2)
 # print("after sorting: \n", Y_test2.head())
 
+# run score calculations
 score_calculation(Y_pred, Y_test)
