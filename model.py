@@ -7,7 +7,7 @@ def generate_model(
         Y_test,
         scale_pos_weight,
         missing_val, 
-        model_name,
+        model_file,
         number_of_trees):
 
     # Param list
@@ -36,7 +36,7 @@ def generate_model(
         verbose_eval=5,
     )
 
-    boosted_tree.save_model(model_name)
+    boosted_tree.save_model(model_file)
 
 def print_tree(boosted_tree):
     node_params = {

@@ -26,7 +26,7 @@ number_of_trees = 10
 """
 End of editable section
 """
-
+model_path = "/home/ashrith/github/pima-indians-diabetes/model"
 model_file = "pima_" + str(number_of_trees) + ".model"
 
 # read csv
@@ -50,11 +50,14 @@ X_train, X_test, Y_train, Y_test, scale_pos_weight = split(X, Y, test_split)
 
 # main only execs if this is the run as script
 if __name__ == "__main__":
-    if os.path.exists("./" + str(model_file)):
+    if os.path.exists(model_path + "/" + str(model_file)):
         flag = 1
         print("Model file exists, skipping model generation...")
     else:
         flag = 0
+
+# change directory to read and write model files
+os.chdir(model_path)
 
 if flag != 1:
     boosted_tree = generate_model(

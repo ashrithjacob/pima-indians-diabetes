@@ -1,11 +1,18 @@
-def test_valerror(i):
-    if i > 5:
-        raise ValueError("Either one of `group` or `qid` should be None.")
+import os
+# 1 testing exceptions
+class Test:
+    def __init__(self, i):
+        self.i = i
+
+    def test_valerror(self):
+        if self.i > 5:
+            raise ValueError("Either one of `group` or `qid` should be None.")
 
 
-test_valerror(4)
+obj = Test(4)
+obj.test_valerror()
 
-
+# 2 testing str and repr
 class MyClass:
     x = 0
     y = ""
@@ -19,14 +26,20 @@ class MyClass:
 
     def __str__(self):
         return "MyClass(x= " + str(self.x) + "y=" + self.y + ")"
-    
-    def testing_stuff(self):
-        d []
+
+    # def testing_stuff(self):
 
 
 myObject = MyClass(12345, "Hello")
 
-print(myObject.fn())
-print(myObject)
-print(str(myObject))
-print(myObject.__repr__())
+print("myObject.fn:         ",myObject.fn())
+print("myObject:            ", myObject)
+print("str(myObject):       ", str(myObject))
+print("myObject.__repr__(): ", myObject.__repr__())
+
+# 3 testing joins
+x = (f"{''.join(map(chr, [98, 114, 117, 109]))}, " * 5)[:-2]
+print("join example:        ",x)
+
+os.chdir('./model')
+print(format(os.getcwd()))
