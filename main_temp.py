@@ -9,9 +9,9 @@ Information on dataset: SEE README
 """
 
 import sys
-import os
 import numpy as np
 import pandas as pd
+import json
 from sklearn.model_selection import train_test_split
 from data import *
 from pred import *
@@ -21,9 +21,9 @@ from sklearn.metrics import precision_score, accuracy_score
 Editable parameters by user:
 """
 PATH = "dataset/pima-indians-diabetes-withcol.csv"  # path to dataset
-test_split = 0.2  # what fraction of total data is to be used as test split
+test_split = 0.1  # what fraction of total data is to be used as test split
 missing_val = np.NaN
-number_of_trees = 100
+number_of_trees = 2000
 """
 End of editable section
 """
@@ -48,29 +48,30 @@ X_train, X_test, Y_train, Y_test = train_test_split(
 )
 scale_pos_weight = sum(Y_train[:] == 0) / sum(Y_train[:] == 1)
 scale_pos_weight_test = sum(Y_test[:] == 0) / sum(Y_test[:] == 1)
-print(scale_pos_weight)
-print(scale_pos_weight_test)
-param = {
-    "objective": "binary:logistic",
-    "eta": 0.375,
-    "max_depth": 10.0,
-    "gamma": 1.5,
-    "reg_alpha": 19.0,
-    "reg_lambda": 0.477,
-    "colsample_bytree": 0.571,
-    "min_child_weight": 5.0,
-    "n_estimators": number_of_trees,
-    "eval_metric": "auc",
-}
+
+print("\nscale_pos_weight", scale_pos_weight)
+print("\nscale_pos_weight_test", scale_pos_weight_test)
+
+# Loading json file with param dictionary
+with open("param_vals.json") as json_file:
+    data = json.load(json_file)
+    # getting specific element in data
+    param = data["param_vals"][int(sys.argv[1])]
+
+# XGB classifier
 clf = xgb.XGBClassifier(
     objective=param["objective"],
     n_estimators=param["n_estimators"],
     max_depth=int(param["max_depth"]),
     gamma=param["gamma"],
-    reg_alpha=int(param["reg_alpha"]),
+    learning_rate=param["eta"],
+    # reg_alpha=int(param["reg_alpha"]),
     min_child_weight=int(param["min_child_weight"]),
     colsample_bytree=int(param["colsample_bytree"]),
-    eval_metric=param["eval_metric"],
+    subsample=param["subsample"],
+    nthread=-1,
+    scale_pos_weight=scale_pos_weight,
+    # eval_metric=param["eval_metric"],
 )
 print("loading data end, start to boost trees")
 evaluation = [(X_train, Y_train), (X_test, Y_test)]
@@ -81,8 +82,11 @@ clf.fit(
     verbose=False,
 )
 Y_pred = clf.predict(X_test)
-print("Y_pred", type(Y_pred[:]))
+print("Y_pred", Y_pred[:])
 print("Y_test", Y_test.iloc[21])
 accuracy = accuracy_score(Y_test, Y_pred)
-print("SCORE:", accuracy)
-print("manually calculated", sum(Y_test.to_numpy() == Y_pred) / Y_pred.size)
+print("Accuracy: %.2f%%" % (accuracy * 100.0))
+print(
+    "Manually calculated Accuracy: %.2f%%"
+    % (sum(Y_test.to_numpy() == Y_pred) * 100 / Y_pred.size)
+)
