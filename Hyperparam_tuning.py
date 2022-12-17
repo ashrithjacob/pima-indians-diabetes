@@ -32,9 +32,13 @@ from pred import *
 """
 Editable parameters by user:
 """
-PATH = "dataset/pima-indians-diabetes-withcol.csv"  # path to dataset
-test_split = 0.1  # what fraction of total data is to be used as test split
+# path to dataset
+PATH = "dataset/pima-indians-diabetes-withcol.csv"
+# fraction of data used as test split
+test_split = 0.1
+# value for missing information
 missing_val = np.NaN
+# also referred to as n_estimators
 number_of_trees = 2000
 """
 End of editable section
@@ -62,34 +66,35 @@ scale_pos_weight = sum(Y_train[:] == 0) / sum(Y_train[:] == 1)
 
 # hyperparam_tuning(ps_aut)
 space = {
-    "objective": "binary:logistic",
-    "eta": hp.quniform("eta", 0.025, 0.5, 0.025),
-    "max_depth": hp.quniform("max_depth", 3, 18, 1),
-    "gamma": hp.uniform("gamma", 0, 9),
-    "reg_alpha": hp.quniform("reg_alpha", 0, 180, 1),
-    "reg_lambda": hp.uniform("reg_lambda", 0, 1),
     "colsample_bytree": hp.uniform("colsample_bytree", 0.5, 1),
-    "subsample": hp.quniform("subsample", 0.025, 1, 0.025),
+    "eta": hp.quniform("eta", 0.025, 0.5, 0.025),
+    "eval_metric": "auc",
+    "gamma": hp.uniform("gamma", 0, 9),
+    "max_depth": hp.quniform("max_depth", 3, 18, 1),
     "min_child_weight": hp.quniform("min_child_weight", 0, 10, 1),
     "n_estimators": number_of_trees,
-    "eval_metric": "auc",
+    "objective": "binary:logistic",
+    "reg_alpha": hp.quniform("reg_alpha", 0, 180, 1),
+    "reg_lambda": hp.uniform("reg_lambda", 0, 1),
     "scale_pos_weight": scale_pos_weight,
+    "subsample": hp.quniform("subsample", 0.025, 1, 0.025),
 }
 
 # define an objective function
 def objective(space):
     clf = xgb.XGBClassifier(
-        objective=space["objective"],
-        n_estimators=space["n_estimators"],
-        max_depth=int(space["max_depth"]),
-        gamma=space["gamma"],
-        eta=space["eta"],
-        reg_alpha=int(space["reg_alpha"]),
-        min_child_weight=int(space["min_child_weight"]),
-        subsample=space["subsample"],
         colsample_bytree=int(space["colsample_bytree"]),
+        eta=space["eta"],
         eval_metric=space["eval_metric"],
+        gamma=space["gamma"],
+        max_depth=int(space["max_depth"]),
+        min_child_weight=int(space["min_child_weight"]),
+        n_estimators=space["n_estimators"],
+        objective=space["objective"],
+        reg_alpha=int(space["reg_alpha"]),
+        reg_lambda=space["reg_lambda"],
         scale_pos_weight=space["scale_pos_weight"],
+        subsample=space["subsample"],
     )
     evaluation = [(X_train, Y_train), (X_test, Y_test)]
     clf.fit(
@@ -108,10 +113,8 @@ def objective(space):
 # ps = objective(param)
 trials = Trials()
 best_hyperparams = fmin(
-    fn=objective, space=space, algo=tpe.suggest, max_evals=10, trials=trials
+    fn=objective, space=space, algo=tpe.suggest, max_evals=100, trials=trials
 )
 
 print("The best hyperparameters are : ", "\n")
 print(best_hyperparams)
-
-# TODO: Try to improve accuracy from 71% to as high as possible

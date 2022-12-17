@@ -6,6 +6,11 @@ DATASET: pima-indians-diabetes dataset
 Information on dataset: SEE README
 
 'black' package used as linter
+// train test split=0.1
+// n_estimators=2000
+// objective=binary:logistic
+// scale_pos_weight=sum(Y_train[:] == 0) / sum(Y_train[:] == 1)
+// Get 79% with above values and dict from param_vals.json
 """
 
 import sys
@@ -60,18 +65,18 @@ with open("param_vals.json") as json_file:
 
 # XGB classifier
 clf = xgb.XGBClassifier(
-    objective=param["objective"],
-    n_estimators=param["n_estimators"],
-    max_depth=int(param["max_depth"]),
-    gamma=param["gamma"],
-    learning_rate=param["eta"],
-    # reg_alpha=int(param["reg_alpha"]),
-    min_child_weight=int(param["min_child_weight"]),
     colsample_bytree=int(param["colsample_bytree"]),
-    subsample=param["subsample"],
-    nthread=-1,
+    eta=param["eta"],
+    eval_metric="auc",
+    gamma=param["gamma"],
+    max_depth=int(param["max_depth"]),
+    min_child_weight=int(param["min_child_weight"]),
+    n_estimators=number_of_trees,
+    objective="binary:logistic",
+    reg_alpha=int(param["reg_alpha"]),
+    reg_lambda=param["reg_lambda"],
     scale_pos_weight=scale_pos_weight,
-    # eval_metric=param["eval_metric"],
+    subsample=param["subsample"],
 )
 print("loading data end, start to boost trees")
 evaluation = [(X_train, Y_train), (X_test, Y_test)]

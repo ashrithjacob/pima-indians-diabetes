@@ -1,76 +1,14 @@
 {
   "param_vals": [
     {
-      "objective": "binary:logistic",
-      "n_estimators": 2000,
-      "colsample_bytree": 0.812963666500081,
-      "eta": 0.4,
-      "gamma": 0.9849257660040988,
-      "max_depth": 14.0,
-      "min_child_weight": 2.0,
-      "reg_alpha": 20.0,
-      "reg_lambda": 0.893318069365949,
-      "subsample": 0.47500000000000003
-    },
-    {
-      "objective": "binary:logistic",
-      "n_estimators": 2000,
-      "colsample_bytree": 0.8366676489678231,
-      "eta": 0.07500000000000001,
-      "gamma": 7.493280607219513,
-      "max_depth": 14.0,
-      "min_child_weight": 1.0,
-      "reg_alpha": 12.0,
-      "reg_lambda": 0.6163107797239847,
-      "subsample": 0.65
-    },
-    {
-      "objective": "binary:logistic",
-      "n_estimators": 2000,
-      "colsample_bytree": 0.6133072515263509,
-      "eta": 0.45,
-      "gamma": 5.120952317242754,
-      "max_depth": 14.0,
-      "min_child_weight": 2.0,
-      "reg_alpha": 21.0,
-      "reg_lambda": 0.13046365851448893,
-      "subsample": 0.675
-    },
-    {
-      "objective": "binary:logistic",
-      "n_estimators": 2000,
-      "max_depth": 9,
-      "min_child_weight": 2,
-      "gamma": 0.4,
-      "reg_alpha": 0.0,
-      "reg_lambda": 1.0,
-      "subsample": 0.8,
-      "colsample_bytree": 0.8,
-      "eta": 0.3
-    },
-    {
-      "objective": "binary:logistic",
-      "n_estimators": 2000,
-      "colsample_bytree": 0.7481060612481503,
-      "eta": 0.325,
-      "gamma": 8.991095163909739,
-      "max_depth": 10.0,
-      "min_child_weight": 9.0,
-      "reg_alpha": 17.0,
-      "reg_lambda": 0.08463504611130535,
-      "subsample": 0.8250000000000001
-    },
-    {
-      "objective": "binary:logistic",
-      "n_estimators": 2000,
-      "colsample_bytree": 0.797982352430519,
-      "eta": 0.125,
-      "gamma": 4.228236991660849,
-      "max_depth": 17.0,
-      "min_child_weight": 4.0,
-      "reg_alpha": 28.0,
-      "reg_lambda": 0.8253579698744726,
-      "subsample": 0.8500000000000001
+      "colsample_bytree": 0.5287519056516573,
+      "eta": 0.275,
+      "gamma": 3.621268364776089,
+      "max_depth": 4.0,
+      "min_child_weight": 7.0,
+      "reg_alpha": 10.0,
+      "reg_lambda": 0.27828568591189895,
+      "subsample": 0.625
     }
   ]
 }
