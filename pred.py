@@ -20,4 +20,4 @@ def predict_test(X_test, Y_test, model_file, missing_val) -> float:
         % (accuracy * 100.0)
     )
     print("manually calculated accuracy %.2f%%" % (manual_accuracy * 100))
-    return accuracy
+    return accuracy, Y_pred

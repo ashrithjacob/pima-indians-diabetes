@@ -1,0 +1,38 @@
+{
+  "param_vals_skapi": [
+    {
+      "colsample_bytree": 0.5287519056516573,
+      "eta": 0.275,
+      "eval_metric": "auc",
+      "gamma": 3.621268364776089,
+      "max_depth": 4,
+      "min_child_weight": 7.0,
+      "objective": "binary:logistic",
+      "reg_alpha": 10.0,
+      "reg_lambda": 0.27828568591189895,
+      "subsample": 0.625
+    }
+  ],
+  "param_vals_dmatrix": [
+    {
+      "colsample_bytree": 0.6045239999998553,
+      "eta": 0.07500000000000001,
+      "gamma": 5.922585211850327,
+      "min_child_weight": 9.0,
+      "reg_alpha": 12.0,
+      "reg_lambda": 0.37774768174767154,
+      "subsample": 0.875
+    }
+  ],
+  "header_list": [
+    "Times pregnant",
+    "Plasma glucose concentration",
+    "Blood pressure",
+    "skin thickness",
+    "Serum insulin",
+    "Body mass index",
+    "Diabetes pedigree function",
+    "Age",
+    "Class variable"
+  ]
+}
