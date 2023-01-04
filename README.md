@@ -1,3 +1,9 @@
+## Table of Contents
+
+- [About Dataset](#about-dataset)
+- [Using the repository](#using-the-repository)
+- [Sklearn API vs DMatrix](#sklearn-api-vs-dmatrix)
+
 ## About Dataset
 
 1. Title: Pima Indians Diabetes Database
@@ -137,4 +143,3 @@ Where:\
 
 Below are some manual calculations done on the pima data, using just two trees. Calculation was to check if the outpur values are exactly the same as that derived through the above formula:\
 ![Alt text](figures/manual_calculation.jpg?raw=true "manual calculation")
-
