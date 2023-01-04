@@ -49,7 +49,7 @@ if __name__ == "__main__":
     df = pd.read_csv(PATH)
     # Set dependant and independant variables
     ncols = df.shape[1]
-    X = df.iloc[:, 0 : ncols - 1]
+    X = df.iloc[:, 0: ncols - 1]
     Y = df.iloc[:, ncols - 1]
 
     # clean data
@@ -141,8 +141,11 @@ trials = Trials()
 
 if sys.argv[1] == "SKAPI":
     best_hyperparams = fmin(
-        fn=objective_skapi, space=space, algo=tpe.suggest, max_evals=100, trials=trials
-    )
+        fn=objective_skapi,
+        space=space,
+        algo=tpe.suggest,
+        max_evals=100,
+        trials=trials)
 elif sys.argv[1] == "DMATRIX":
     best_hyperparams = fmin(
         fn=objective_dmatrix,
@@ -156,5 +159,7 @@ else:
         "INCORRECT METHOD PASSED- ONLY FOLLOWING METHODS PERMITTED:\n 1. SKAPI\n 2. DMATRIX"
     )
     exit(1)
+best_model = trials.results[np.argmin([r["loss"] for r in trials.results])]
 print("The best hyperparameters are : ", "\n")
 print(best_hyperparams)
+print("The best accuracy %.2f%%" % (-1.0 * best_model["loss"] * 100.0))
